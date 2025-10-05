@@ -25,7 +25,7 @@ async def on_ready():
 async def on_member_join(member):
     await member.send(f"Welcome to our server {member.name}! ❤️")
     channel = bot.get_channel(1420432950779973632)
-    await channel.send(f"👋🏻 Welcome {member.name} to the server! Check out our website and socials in my 'About me'! 🔥")
+    await channel.send(f"{member.mention} Welcome to the server! We are happy to have you here. 🔥")
 
 @bot.event
 async def on_message(message):
@@ -36,7 +36,7 @@ async def on_message(message):
     if not message.content.startswith(bot.command_prefix):
         bad_words = ["shit","fuck","bitch","lund","rape","nigger","nigga",
                      "chutiya","madarchod","chut","bhosdike","bsdk","gaandu",
-                     "lode","cunt","pussy","dick","porn","sex","masturbate","cum"]
+                     "lode","cunt","pussy","dick","porn","sex","masturbate","cum","gandu","rapist","molest","randi","rand"]
 
         for word in bad_words:
             if word in message.content.lower():
@@ -84,8 +84,9 @@ async def poll(ctx, *, question):
 @bot.command()
 @commands.has_permissions(manage_messages=True)
 async def purge(ctx, amount: int):
-    deleted = await ctx.channel.purge(limit=amount, bulk=True)
-    await ctx.send(f"✅ Deleted {len(deleted)} messages.", delete_after=2)
+    deleted = await ctx.channel.purge(limit=amount + 1)
+    await ctx.send(f"✅ Deleted {len(deleted) - 1} messages.", delete_after=2)
+
 
 # ====================== Server Info ======================
 
@@ -130,6 +131,15 @@ async def slowmode(ctx, seconds: int, channel: discord.TextChannel = None):
         await ctx.send(f"🐇 Slowmode disabled in {channel.mention}.")
     else:
         await ctx.send(f"🐢 Slowmode set to **{seconds} seconds** in {channel.mention}.")
+
+@bot.command()
+async def helpme(ctx):
+    embed = discord.Embed(title="🤖 Club 404 Bot Commands", color=0x5865F2)
+    embed.add_field(name="👋 General", value="-hello, -website, -linkedin, -instagram, -twitter", inline=False)
+    embed.add_field(name="🧹 Moderation", value="-purge [n], -lock, -unlock, -slowmode [s]", inline=False)
+    embed.add_field(name="📊 Fun", value="-poll [question]", inline=False)
+    embed.add_field(name="ℹ️ Info", value="-serverinfo", inline=False)
+    await ctx.send(embed=embed)
 
 # ====================== Run Bot ======================
 
